@@ -1,20 +1,8 @@
 package thesis.service.dto
 
-import thesis.entities.Vehicle
+data class VehicleDTO(var id: Long?, var licenseNumber: Long?,var age: Int?,var brand: String?,var owner: String?) {
 
-
-class VehicleDTO() {
-
-    var id: Long? = null
-
-    var licenseNumber: Long? = null
-
-    var age: Int? = null
-
-    var brand: String? = null
-
-    var owner: String? = null
-
+    constructor() : this(null, null, null, null,null)
 
     companion object {
 

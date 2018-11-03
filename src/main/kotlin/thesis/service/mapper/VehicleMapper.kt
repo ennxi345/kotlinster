@@ -12,8 +12,8 @@ import java.util.*
 @Mapper(componentModel = "spring",collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED )
 interface VehicleMapper {
 
-     fun converToDto(vehicle: Vehicle) : VehicleDTO
+     fun convertToDto(vehicle: Vehicle) : VehicleDTO
 
-     fun converToEntity(vehicleDto: VehicleDTO ) : Vehicle
+     fun convertToEntity(vehicleDto: VehicleDTO ) : Vehicle
 
 }
