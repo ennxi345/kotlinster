@@ -16,4 +16,8 @@ interface VehicleMapper {
 
      fun convertToEntity(vehicleDto: VehicleDTO ) : Vehicle
 
+     fun convertToDtoList(vehicleList: List<Vehicle>) : List<VehicleDTO>
+
+     fun convertToEntityList(vehicleDtoList: List<VehicleDTO>) : List<Vehicle>
+
 }

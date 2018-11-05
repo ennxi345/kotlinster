@@ -9,19 +9,28 @@ import { EntityService } from '../../../entity.service';
 })
 export class VehicleComponent implements OnInit, OnDestroy {
     vehicle: Vehicle;
+    vehicleList: any;
+
     constructor(private alertService: JhiAlertService, private entityService: EntityService) {
         this.vehicle = new Vehicle();
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.entityService.getAll().subscribe(vehicles => (this.vehicleList = vehicles as Vehicle[]));
+        console.log(this.vehicleList);
+    }
+
+    public trackByFn(index, item) {
+        return index;
+    }
 
     ngOnDestroy() {}
 
     save(): void {
         if (this.vehicle.id === undefined) {
-            this.entityService.create(this.vehicle);
+            this.entityService.create(this.vehicle).subscribe();
         } else {
-            this.entityService.update(this.vehicle);
+            this.entityService.update(this.vehicle).subscribe();
         }
     }
 }

@@ -2,6 +2,7 @@ package thesis.web.rest
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import thesis.entities.Vehicle
@@ -45,7 +46,17 @@ class VehicleResource (val vehicleRepository: VehicleRepository){
             .body<VehicleDTO>(vehicleDTO)
     }
 
-    @GetMapping("/vehicle/all")
-    fun getAll() =
-        vehicleRepository.findAll()
+    @GetMapping("/vehicledto/all")
+    fun getAll(): ResponseEntity<List<VehicleDTO>> {
+
+        val headers = HttpHeaders()
+        headers.add("X-agroKotlin-error", "error.idexist")
+        headers.add("X-agroKotlin-params", "VehicleList")
+
+        var vehicleList = vehicleRepository.findAll()
+        if(vehicleList == null) {
+            return  ResponseEntity.badRequest().header(null).body(null)
+        }
+        return ResponseEntity<List<VehicleDTO>>(vehicleMapper.convertToDtoList(vehicleList), headers, HttpStatus.OK)
+    }
 }

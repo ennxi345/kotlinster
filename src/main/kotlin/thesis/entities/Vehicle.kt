@@ -15,7 +15,6 @@ data class Vehicle(@Id
                    var age: Int?, @Size(max = 50)
                    @Column(name = "brand", length = 50)
                    var brand: String?,
-                   @Size(max = 100)
                    @Column(name = "owner", length = 100)
                    var owner: String?) {
 
