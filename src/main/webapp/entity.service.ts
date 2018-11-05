@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class EntityService {
-    private resourceUrl = 'api/vehicle';
+    private resourceUrl = 'api/vehicledto';
 
     constructor(private http: HttpClient, private alertService: JhiAlertService) {}
 
@@ -36,36 +36,5 @@ export class EntityService {
 
     delete(id: number) {
         return this.http.delete(`${this.resourceUrl}/${id}`);
-    }
-
-    private getFilterCallback() {
-        return function(r: any, params: URLSearchParams) {
-            if (r.dontes) {
-                params.set('dontes.equals', r.dontes);
-            }
-            if (r.iktatoszam) {
-                const ikt = r.iktatoszam.replace(/\?/g, '_').replace(/\*/g, '%');
-
-                params.set('iktatoszam.contains', ikt);
-            }
-
-            if (r.sort) {
-                params.append('sort', 'createdDate,desc');
-            }
-            if (r.intezkedes && 0 !== r.intezkedes.length) {
-                params.set('intezkedes.equals', r.intezkedes);
-            }
-            if (r.statusz || r.statusz === 0) {
-                params.set('statusz.equals', r.statusz);
-            }
-            if (r.ugyfel && 0 !== r.ugyfel.length) {
-                const ugy = r.ugyfel.replace(/\?/g, '_').replace(/\*/g, '%');
-
-                params.set('ugyfel', ugy);
-            }
-            if (r.megyeId) {
-                params.set('megye.equals', r.megyeId);
-            }
-        };
     }
 }

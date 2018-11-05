@@ -40,7 +40,7 @@ class VehicleResource (val vehicleRepository: VehicleRepository){
         var vehicle = vehicleMapper.convertToEntity(vehicleDTO)
         vehicleRepository.save(vehicle)
 
-        return ResponseEntity.created(URI("/api/vehiledto/" + vehicleDTO.id))
+        return ResponseEntity.created(URI("/api/vehicledto/" + vehicleDTO.id))
             .headers(headers)
             .body<VehicleDTO>(vehicleDTO)
     }
