@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import thesis.constants.Constant.Companion.API_BASE_URL
 import thesis.entities.Vehicle
 import thesis.repository.VehicleRepository
 import thesis.service.dto.VehicleDTO
@@ -13,7 +14,7 @@ import java.net.URI
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(API_BASE_URL)
 class VehicleResource (val vehicleRepository: VehicleRepository){
 
     //A lateinit segítségével tudom autowired-é tenni a mapper-t

@@ -8,6 +8,7 @@ import { Vehicle } from 'app/entities/vehicle/vehicle.model';
 @Injectable()
 export class EntityService {
     private resourceUrl = 'api/vehicledto';
+    private countyUrl = 'api/county';
 
     constructor(private http: HttpClient, private alertService: JhiAlertService) {}
 
