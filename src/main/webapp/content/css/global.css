@@ -230,3 +230,11 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-css-add-main JHipster will add new css style */
+
+.ng-select span {
+    color: black;
+}
+
+.ng-select {
+    border: 4px;
+}

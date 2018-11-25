@@ -1,0 +1,50 @@
+<div class="col-6">
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group">
+            <label> Megyék</label>
+            <ng-select
+                [items]="countyList"
+                bindLabel="countyName"
+                bindValue="id"
+                [multiple]="false"
+                [closeOnSelect]="true"
+                [hideSelected]="true"
+                [(ngModel)]="headquarter.countyId">
+            </ng-select>
+        </div>
+        <div class="form-group">
+            <label for="settlement"></label>
+            <input type="text" class="form-control" id="settlement" name="settlement"
+                   [(ngModel)]="headquarter.settlement"/>
+        </div>
+        <div class="form-group">
+            <label for="zipCode"></label>
+            <input type="text" class="form-control" id="zipCode" name="zipCode"
+                   [(ngModel)]="headquarter.zipCode"/>
+        </div>
+        <div class="form-group">
+            <label for="address"></label>
+            <input type="text" class="form-control" id="address" name="address"
+                   [(ngModel)]="headquarter.address"/>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber"></label>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                   [(ngModel)]="headquarter.phoneNumber"/>
+        </div>
+        <div class="form-group">
+            <label for="email"></label>
+            <input type="text" class="form-control" id="email" name="email"
+                   [(ngModel)]="headquarter.email"/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban">Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-primary" (click)="save()">
+            <span class="fa fa-save">Save</span>
+        </button>
+    </div>
+</div>

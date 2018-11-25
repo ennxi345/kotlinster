@@ -7,36 +7,33 @@ import { Vehicle } from 'app/entities/vehicle/vehicle.model';
 
 @Injectable()
 export class EntityService {
-    private resourceUrl = 'api/vehicledto';
-    private countyUrl = 'api/county';
+    private resourceUrl = 'api/';
 
     constructor(private http: HttpClient, private alertService: JhiAlertService) {}
 
-    create(entity: any): Observable<any> {
+    create(entity: any, url: string): Observable<any> {
         const copy = entity;
-        return this.http.post(this.resourceUrl, copy);
+        return this.http.post(this.resourceUrl + url, copy);
     }
 
-    update(entity: any): Observable<any> {
+    update(entity: any, url: string): Observable<any> {
         const copy = entity;
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
+        return this.http.put(this.resourceUrl + url, copy).map((res: Response) => {
             const jsonResponse = res.json();
 
             return res.json();
         });
     }
 
-    find(id: number): Observable<any> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            return res.json();
-        });
+    find(id: number, url: string): Observable<any> {
+        return this.http.get(`${this.resourceUrl + url}/${id}`);
     }
 
-    getAll(): Observable<any> {
-        return this.http.get(`${this.resourceUrl}/all`);
+    getAll(url: string): Observable<any> {
+        return this.http.get(`${this.resourceUrl + url}/all`);
     }
 
-    delete(id: number) {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
+    delete(id: number, url: string) {
+        return this.http.delete(`${this.resourceUrl + url}/${id}`);
     }
 }

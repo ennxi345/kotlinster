@@ -11,13 +11,13 @@ import { County } from 'app/entities/county/county.model';
 export class VehicleComponent implements OnInit, OnDestroy {
     vehicle: Vehicle;
     vehicleList: any;
-
+    url = 'vehicle';
     constructor(private alertService: JhiAlertService, private entityService: EntityService) {
         this.vehicle = new Vehicle();
     }
 
     ngOnInit() {
-        this.entityService.getAll().subscribe(vehicles => (this.vehicleList = vehicles as Vehicle[]));
+        this.entityService.getAll(this.url).subscribe(vehicles => (this.vehicleList = vehicles as Vehicle[]));
         console.log(this.vehicleList);
     }
 
@@ -29,9 +29,9 @@ export class VehicleComponent implements OnInit, OnDestroy {
 
     save(): void {
         if (this.vehicle.id === undefined) {
-            this.entityService.create(this.vehicle).subscribe();
+            this.entityService.create(this.vehicle, this.url).subscribe();
         } else {
-            this.entityService.update(this.vehicle).subscribe();
+            this.entityService.update(this.vehicle, this.url).subscribe();
         }
     }
 }

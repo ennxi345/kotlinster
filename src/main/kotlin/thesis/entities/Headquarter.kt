@@ -9,8 +9,9 @@ data class Headquarter(
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     var id: Long?,
+    @JoinColumn(name ="county_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    var countyId: County?,
+    var county: County?,
     @Column(name = "settlement", length = 100)
     var settlement: String?,
     @Column(name = "zip_code",length = 20)

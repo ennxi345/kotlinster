@@ -1,15 +1,15 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { EntityService } from '../../entity.service';
 import { VehicleComponent } from 'app/entities/vehicle/vehicle.component';
 import { RouterModule } from '@angular/router';
 import { entityRoute } from 'app/entities/entity.route';
 import { CommonModule } from '@angular/common';
+import { HeadquarterComponent } from 'app/entities/headquarter/headquarter.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { HeadquarterDialogComponent } from 'app/entities/headquarter/headquarter.dialog.component';
 
-/* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 const ENTITY_STATES = [...entityRoute];
 
 @NgModule({
@@ -18,9 +18,10 @@ const ENTITY_STATES = [...entityRoute];
         RouterModule.forRoot(ENTITY_STATES, {useHash: true}),
         FormsModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        NgSelectModule
     ],
-    declarations: [VehicleComponent],
+    declarations: [VehicleComponent, HeadquarterComponent, HeadquarterDialogComponent],
     entryComponents: [],
     providers: [EntityService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

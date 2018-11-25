@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-6">
+        <div class="row">
+            <table class="table table-striped table-bordered w-100" *ngIf="headquarterList && headquarterList?.length > 0">
+                <thead>
+                <th>
+                    <span> County </span>
+                    <span class="fa fa-sort"></span>
+                </th>
+                <th>
+                    <span> Settlement </span>
+                    <span class="fa fa-sort"></span>
+                </th>
+                <th>
+                    <span> Zip Code </span>
+                    <span class="fa fa-sort"></span>
+                </th>
+                <th>
+                    <span> Address </span>
+                    <span class="fa fa-sort"></span>
+                </th>
+                <th>
+                    <span> Phone number </span>
+                    <span class="fa fa-sort"></span>
+                </th>
+                <th>
+                    <span> Email </span>
+                    <span class="fa fa-sort"></span>
+                </th>
+                </thead>
+                <tbody>
+
+                <tr *ngFor="let headquarter of headquarterList; trackBy: trackByFn">
+                    <td>
+                        {{findCounty(headquarter.countyId).countyName}}
+                    </td>
+                    <td>
+                        {{headquarter.settlement}}
+                    </td>
+                    <td>
+                        {{headquarter.zipCode}}
+                    </td>
+                    <td>
+                        {{headquarter.address}}
+                    </td>
+                    <td>
+                        {{headquarter.phoneNumber}}
+                    </td>
+                    <td>
+                        {{headquarter.email}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
