@@ -22,14 +22,6 @@ class VehicleResource (val vehicleRepository: VehicleRepository){
     lateinit var vehicleMapper: VehicleMapper
 
     @PostMapping("/vehicle")
-    fun createVehicle( @RequestBody vehicle: Vehicle) {
-        if(vehicle.id == null){
-            vehicleRepository.save(vehicle)
-        }
-    }
-
-
-    @PostMapping("/vehicledto")
     fun createVehicleFromDto( @RequestBody vehicleDTO: VehicleDTO): ResponseEntity<VehicleDTO> {
 
         val headers = HttpHeaders()
@@ -47,7 +39,7 @@ class VehicleResource (val vehicleRepository: VehicleRepository){
             .body<VehicleDTO>(vehicleDTO)
     }
 
-    @GetMapping("/vehicledto/all")
+    @GetMapping("/vehicle/all")
     fun getAll(): ResponseEntity<List<VehicleDTO>> {
 
         val headers = HttpHeaders()

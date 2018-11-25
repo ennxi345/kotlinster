@@ -7,33 +7,27 @@ import { Vehicle } from 'app/entities/vehicle/vehicle.model';
 
 @Injectable()
 export class EntityService {
-    private resourceUrl = 'api/';
-
     constructor(private http: HttpClient, private alertService: JhiAlertService) {}
 
     create(entity: any, url: string): Observable<any> {
         const copy = entity;
-        return this.http.post(this.resourceUrl + url, copy);
+        return this.http.post(url, copy);
     }
 
     update(entity: any, url: string): Observable<any> {
         const copy = entity;
-        return this.http.put(this.resourceUrl + url, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-
-            return res.json();
-        });
+        return this.http.put(url, copy, { observe: 'response' });
     }
 
     find(id: number, url: string): Observable<any> {
-        return this.http.get(`${this.resourceUrl + url}/${id}`);
+        return this.http.get(`${url}/${id}`);
     }
 
     getAll(url: string): Observable<any> {
-        return this.http.get(`${this.resourceUrl + url}/all`);
+        return this.http.get(`${url}/all`);
     }
 
     delete(id: number, url: string) {
-        return this.http.delete(`${this.resourceUrl + url}/${id}`);
+        return this.http.delete(`${url}/${id}`);
     }
 }

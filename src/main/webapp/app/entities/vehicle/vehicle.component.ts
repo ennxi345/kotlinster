@@ -11,7 +11,7 @@ import { County } from 'app/entities/county/county.model';
 export class VehicleComponent implements OnInit, OnDestroy {
     vehicle: Vehicle;
     vehicleList: any;
-    url = 'vehicle';
+    url = 'api/vehicle';
     constructor(private alertService: JhiAlertService, private entityService: EntityService) {
         this.vehicle = new Vehicle();
     }

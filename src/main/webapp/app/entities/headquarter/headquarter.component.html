@@ -1,5 +1,10 @@
+
 <div class="row">
-    <div class="col-6">
+    <button type="button" class="btn btn-primary" (click)="openModal(szekhelytemplate)">Új székhely</button>
+</div>
+
+<div class="row">
+    <div class="col">
         <div class="row">
             <table class="table table-striped table-bordered w-100" *ngIf="headquarterList && headquarterList?.length > 0">
                 <thead>
@@ -27,27 +32,42 @@
                     <span> Email </span>
                     <span class="fa fa-sort"></span>
                 </th>
+                <th></th>
                 </thead>
                 <tbody>
 
-                <tr *ngFor="let headquarter of headquarterList; trackBy: trackByFn">
+                <tr *ngFor="let szekhely of headquarterList; trackBy: trackByFn">
                     <td>
-                        {{findCounty(headquarter.countyId).countyName}}
+                        {{findCounty(szekhely.countyId).countyName}}
                     </td>
                     <td>
-                        {{headquarter.settlement}}
+                        {{szekhely.settlement}}
                     </td>
                     <td>
-                        {{headquarter.zipCode}}
+                        {{szekhely.zipCode}}
                     </td>
                     <td>
-                        {{headquarter.address}}
+                        {{szekhely.address}}
                     </td>
                     <td>
-                        {{headquarter.phoneNumber}}
+                        {{szekhely.phoneNumber}}
                     </td>
                     <td>
-                        {{headquarter.email}}
+                        {{szekhely.email}}
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container ">
+                            <button class="btn btn-sm" type="button"
+                                    (click)="onNavigate(szekhely.id)">
+                                <span class="fa fa-eye"></span>
+                                <span >View</span>
+                            </button>
+                        <button class="btn btn-danger btn-sm" type="button"
+                                (click)="onDelete(szekhely.id)">
+                            <span class="fa fa-remove">&nbsp;</span>
+                            <span>Törlés</span>
+                        </button>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -55,3 +75,61 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #szekhelytemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Modal</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group">
+            <label> Megyék</label>
+            <ng-select
+                [items]="countyList"
+                bindLabel="countyName"
+                bindValue="id"
+                [multiple]="false"
+                [closeOnSelect]="true"
+                [hideSelected]="true"
+                [(ngModel)]="headquarter.countyId">
+            </ng-select>
+        </div>
+        <div class="form-group">
+            <label for="settlement"></label>
+            <input type="text" class="form-control" id="settlement" name="settlement"
+                   [(ngModel)]="headquarter.settlement"/>
+        </div>
+        <div class="form-group">
+            <label for="zipCode"></label>
+            <input type="text" class="form-control" id="zipCode" name="zipCode"
+                   [(ngModel)]="headquarter.zipCode"/>
+        </div>
+        <div class="form-group">
+            <label for="address"></label>
+            <input type="text" class="form-control" id="address" name="address"
+                   [(ngModel)]="headquarter.address"/>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber"></label>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                   [(ngModel)]="headquarter.phoneNumber"/>
+        </div>
+        <div class="form-group">
+            <label for="email"></label>
+            <input type="text" class="form-control" id="email" name="email"
+                   [(ngModel)]="headquarter.email"/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+            <span class="fa fa-ban">Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-primary" (click)="save()">
+            <span class="fa fa-save">Save</span>
+        </button>
+    </div>
+</ng-template>

@@ -3,7 +3,7 @@ import { Headquarter } from 'app/entities/headquarter/headquarter.model';
 import { County } from 'app/entities/county/county.model';
 import { JhiAlertService } from 'ng-jhipster';
 import { EntityService } from '../../../entity.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'jhi-dialog-headquarter',
@@ -14,9 +14,14 @@ export class HeadquarterDialogComponent implements OnInit, OnDestroy {
     headquarterList: Headquarter[];
     countyList: County[];
     county: County;
-    url = 'headquarter';
+    url = 'api/headquarter';
 
-    constructor(private alertService: JhiAlertService, private entityService: EntityService, private route: ActivatedRoute) {
+    constructor(
+        private alertService: JhiAlertService,
+        private entityService: EntityService,
+        private route: ActivatedRoute,
+        private router: Router
+    ) {
         this.county = new County();
         this.headquarter = new Headquarter();
     }
@@ -24,7 +29,7 @@ export class HeadquarterDialogComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {}
 
     ngOnInit(): void {
-        this.entityService.getAll('county').subscribe(counties => (this.countyList = counties as County[]));
+        this.entityService.getAll('api/county').subscribe(counties => (this.countyList = counties as County[]));
 
         const id = this.route.snapshot.paramMap.get('id');
         this.entityService.find(+id, this.url).subscribe(headquarter => (this.headquarter = headquarter as Headquarter));
@@ -36,5 +41,9 @@ export class HeadquarterDialogComponent implements OnInit, OnDestroy {
         } else {
             this.entityService.update(this.headquarter, this.url).subscribe();
         }
+    }
+
+    cancel() {
+        this.router.navigateByUrl('/headquarter');
     }
 }

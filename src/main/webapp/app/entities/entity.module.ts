@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { HeadquarterComponent } from 'app/entities/headquarter/headquarter.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HeadquarterDialogComponent } from 'app/entities/headquarter/headquarter.dialog.component';
+import { BsModalService, ComponentLoaderFactory, ModalModule, PositioningService } from 'ngx-bootstrap';
 
 const ENTITY_STATES = [...entityRoute];
 
@@ -19,11 +20,12 @@ const ENTITY_STATES = [...entityRoute];
         FormsModule,
         HttpClientModule,
         CommonModule,
-        NgSelectModule
+        NgSelectModule,
+        ModalModule.forRoot()
     ],
     declarations: [VehicleComponent, HeadquarterComponent, HeadquarterDialogComponent],
     entryComponents: [],
-    providers: [EntityService],
+    providers: [EntityService, BsModalService, ComponentLoaderFactory, PositioningService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class KotlinsterEntityModule {}
