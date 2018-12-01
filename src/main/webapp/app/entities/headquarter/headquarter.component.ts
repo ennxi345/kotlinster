@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
-import { JhiAlertService } from 'ng-jhipster';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { EntityService } from '../../../entity.service';
 import { Headquarter } from 'app/entities/headquarter/headquarter.model';
 import { County } from 'app/entities/county/county.model';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { HeadquarterModalComponent } from 'app/entities/headquarter/headquarter-modal.component';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'jhi-headquarter',
@@ -17,19 +19,25 @@ export class HeadquarterComponent implements OnInit, OnDestroy {
     county: County;
     url = 'api/headquarter';
     modalRef: BsModalRef;
+    eventSubscriber: Subscription;
 
     constructor(
         private alertService: JhiAlertService,
         private router: Router,
         private entityService: EntityService,
-        private modalService: BsModalService
+        private modalService: BsModalService,
+        protected eventManager: JhiEventManager
     ) {
         this.headquarter = new Headquarter();
         this.county = new County();
-        this.faszom = new Headquarter();
     }
 
     ngOnInit() {
+        this.loadAll();
+        this.eventSubscriber = this.eventManager.subscribe('Headquarter-modification', response => this.loadAll());
+    }
+
+    loadAll() {
         this.entityService.getAll('api/county').subscribe(counties => (this.countyList = counties as County[]));
         this.entityService.getAll(this.url).subscribe(headquarters => (this.headquarterList = headquarters as Headquarter[]));
     }
@@ -44,28 +52,21 @@ export class HeadquarterComponent implements OnInit, OnDestroy {
         return this.countyList.find(x => x.id === countyId);
     }
 
-    onNavigate(id: number) {
-        this.router.navigateByUrl(`headquarter/` + id);
+    onEdit(headquarter: Headquarter) {
+        this.modalRef = this.modalService.show(HeadquarterModalComponent);
+        this.modalRef.content = headquarter;
+    }
+
+    openConfirmDialog() {
+        this.modalRef = this.modalService.show(HeadquarterModalComponent);
     }
 
     onDelete(id: number) {
-        this.entityService.delete(id, this.url).subscribe();
-    }
-
-    openModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template);
-    }
-
-    save() {
-        console.log(this.headquarter);
-        if (this.headquarter.id === undefined) {
-            this.entityService.create(this.headquarter, this.url).subscribe();
-        } else {
-            this.entityService.update(this.headquarter, this.url).subscribe();
-        }
-    }
-
-    cancel() {
-        this.router.navigateByUrl('/headquarter');
+        this.entityService.delete(id, this.url).subscribe(response =>
+            this.eventManager.broadcast({
+                name: 'Headquarter-modification',
+                content: 'Deleted headquarte'
+            })
+        );
     }
 }

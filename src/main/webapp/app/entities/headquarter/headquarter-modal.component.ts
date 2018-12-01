@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Headquarter } from 'app/entities/headquarter/headquarter.model';
 import { County } from 'app/entities/county/county.model';
-import { JhiAlertService } from 'ng-jhipster';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { EntityService } from '../../../entity.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalRef } from 'ngx-bootstrap';
 
 @Component({
     selector: 'jhi-dialog-headquarter',
-    templateUrl: './headquarter.dialog.component.html'
+    templateUrl: './headquarter-modal.component.html'
 })
-export class HeadquarterDialogComponent implements OnInit, OnDestroy {
+export class HeadquarterModalComponent implements OnInit, OnDestroy {
     headquarter: Headquarter;
-    headquarterList: Headquarter[];
     countyList: County[];
     county: County;
     url = 'api/headquarter';
@@ -20,7 +20,8 @@ export class HeadquarterDialogComponent implements OnInit, OnDestroy {
         private alertService: JhiAlertService,
         private entityService: EntityService,
         private route: ActivatedRoute,
-        private router: Router
+        private modalRef: BsModalRef,
+        protected eventManager: JhiEventManager
     ) {
         this.county = new County();
         this.headquarter = new Headquarter();
@@ -31,19 +32,25 @@ export class HeadquarterDialogComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.entityService.getAll('api/county').subscribe(counties => (this.countyList = counties as County[]));
 
-        const id = this.route.snapshot.paramMap.get('id');
-        this.entityService.find(+id, this.url).subscribe(headquarter => (this.headquarter = headquarter as Headquarter));
+        if (this.modalRef.content) {
+            this.headquarter = this.modalRef.content;
+        }
     }
 
     save() {
-        if (this.headquarter.id === undefined) {
+        if (this.headquarter.id) {
             this.entityService.create(this.headquarter, this.url).subscribe();
         } else {
             this.entityService.update(this.headquarter, this.url).subscribe();
         }
+
+        this.eventManager.broadcast({
+            name: 'Headquarter-modification',
+            content: 'OK'
+        });
     }
 
     cancel() {
-        this.router.navigateByUrl('/headquarter');
+        this.modalRef.hide();
     }
 }

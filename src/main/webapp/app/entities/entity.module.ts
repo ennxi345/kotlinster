@@ -8,7 +8,7 @@ import { entityRoute } from 'app/entities/entity.route';
 import { CommonModule } from '@angular/common';
 import { HeadquarterComponent } from 'app/entities/headquarter/headquarter.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { HeadquarterDialogComponent } from 'app/entities/headquarter/headquarter.dialog.component';
+import { HeadquarterModalComponent } from 'app/entities/headquarter/headquarter-modal.component';
 import { BsModalService, ComponentLoaderFactory, ModalModule, PositioningService } from 'ngx-bootstrap';
 
 const ENTITY_STATES = [...entityRoute];
@@ -23,8 +23,8 @@ const ENTITY_STATES = [...entityRoute];
         NgSelectModule,
         ModalModule.forRoot()
     ],
-    declarations: [VehicleComponent, HeadquarterComponent, HeadquarterDialogComponent],
-    entryComponents: [],
+    declarations: [VehicleComponent, HeadquarterComponent, HeadquarterModalComponent],
+    entryComponents: [HeadquarterModalComponent],
     providers: [EntityService, BsModalService, ComponentLoaderFactory, PositioningService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
