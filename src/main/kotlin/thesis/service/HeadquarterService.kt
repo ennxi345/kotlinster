@@ -9,7 +9,7 @@ interface HeadquarterService {
 
     fun getById(id: Long) : HeadquarterDTO
 
-    fun save(headquarterDTO: HeadquarterDTO)
+    fun save(headquarterDTO: HeadquarterDTO) : HeadquarterDTO
 
     fun deleteById(id: Long)
 

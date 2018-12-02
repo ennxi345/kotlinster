@@ -31,26 +31,35 @@ export class HeadquarterModalComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.entityService.getAll('api/county').subscribe(counties => (this.countyList = counties as County[]));
-
-        if (this.modalRef.content) {
-            this.headquarter = this.modalRef.content;
-        }
     }
 
     save() {
-        if (this.headquarter.id) {
-            this.entityService.create(this.headquarter, this.url).subscribe();
+        if (!this.headquarter.id) {
+            this.entityService
+                .create(this.headquarter, this.url)
+                .subscribe(response => this.onSaveSuccess(response), response => this.onSaveError(response));
         } else {
-            this.entityService.update(this.headquarter, this.url).subscribe();
+            this.entityService
+                .update(this.headquarter, this.url)
+                .subscribe(response => this.onSaveSuccess(response), response => this.onSaveError(response));
         }
-
-        this.eventManager.broadcast({
-            name: 'Headquarter-modification',
-            content: 'OK'
-        });
     }
 
     cancel() {
         this.modalRef.hide();
+    }
+
+    onSaveSuccess(response: any) {
+        console.log(response);
+        this.eventManager.broadcast({
+            name: 'HeadquarterList-modification',
+            content: 'OK'
+        });
+
+        this.alertService.success('Sikeres mentés');
+    }
+
+    onSaveError(response: any) {
+        this.alertService.error('Sikertelen mentés!');
     }
 }

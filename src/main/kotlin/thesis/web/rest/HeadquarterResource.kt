@@ -1,10 +1,13 @@
 package thesis.web.rest
 
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import thesis.constants.Constant
+import thesis.entities.Headquarter
 import thesis.service.HeadquarterService
 import thesis.service.dto.HeadquarterDTO
+import java.net.URI
 import javax.xml.ws.Response
 
 
@@ -18,13 +21,19 @@ class HeadquarterResource(val service: HeadquarterService) {
 
 
     @PostMapping(ENTITY_URL)
-    fun create(@RequestBody iDTO: HeadquarterDTO){
-        service.save(iDTO)
+    fun create(@RequestBody iDTO: HeadquarterDTO) : ResponseEntity<HeadquarterDTO>{
+       var headquarterDTO = service.save(iDTO)
+        if(headquarterDTO.id == null) {
+            return ResponseEntity.badRequest().body(null)
+        }
+
+        return ResponseEntity.created(URI(ENTITY_URL + headquarterDTO.id)).header("Headquarter", HttpStatus.OK.toString())
+            .body<HeadquarterDTO>(headquarterDTO)
     }
 
     @PutMapping(ENTITY_URL)
-    fun update(@RequestBody iDTO: HeadquarterDTO) {
-        service.save(iDTO)
+    fun update(@RequestBody iDTO: HeadquarterDTO): ResponseEntity<HeadquarterDTO> {
+        return ResponseEntity.ok().body(service.save(iDTO))
     }
 
     @GetMapping(ENTITY_URL + "/all")

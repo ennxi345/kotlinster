@@ -18,9 +18,9 @@ class HeadquarterServiceImpl(val headquarterMapper: HeadquarterMapper, val headq
         return headquarterMapper.convertToDto(headquarterRepository.getOne(id))
     }
 
-    override fun save(headquarterDTO: HeadquarterDTO) {
+    override fun save(headquarterDTO: HeadquarterDTO) : HeadquarterDTO {
         var entity: Headquarter = headquarterMapper.convertToEntity(headquarterDTO)
-        headquarterRepository.save(entity)
+        return headquarterMapper.convertToDto(headquarterRepository.save(entity))
     }
 
     override fun deleteById(id: Long) {

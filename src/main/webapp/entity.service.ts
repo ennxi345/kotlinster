@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { JhiAlertService } from 'ng-jhipster';
-import { createRequestOption } from './app/shared';
 import { HttpClient } from '@angular/common/http';
-import { Vehicle } from 'app/entities/vehicle/vehicle.model';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class EntityService {
@@ -11,12 +10,16 @@ export class EntityService {
 
     create(entity: any, url: string): Observable<any> {
         const copy = entity;
-        return this.http.post(url, copy);
+        return this.http.post(url, copy).map((res: Response) => {
+            return res;
+        });
     }
 
     update(entity: any, url: string): Observable<any> {
         const copy = entity;
-        return this.http.put(url, copy, { observe: 'response' });
+        return this.http.put(url, copy).map((res: Response) => {
+            return res;
+        });
     }
 
     find(id: number, url: string): Observable<any> {

@@ -34,7 +34,7 @@ export class HeadquarterComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.loadAll();
-        this.eventSubscriber = this.eventManager.subscribe('Headquarter-modification', response => this.loadAll());
+        this.eventSubscriber = this.eventManager.subscribe('HeadquarterList-modification', response => this.loadAll());
     }
 
     loadAll() {
@@ -64,9 +64,10 @@ export class HeadquarterComponent implements OnInit, OnDestroy {
     onDelete(id: number) {
         this.entityService.delete(id, this.url).subscribe(response =>
             this.eventManager.broadcast({
-                name: 'Headquarter-modification',
+                name: 'HeadquarterList-modification',
                 content: 'Deleted headquarte'
             })
         );
+        this.alertService.error('Sikeres törlés', true);
     }
 }
