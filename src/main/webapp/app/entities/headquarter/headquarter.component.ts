@@ -53,8 +53,9 @@ export class HeadquarterComponent implements OnInit, OnDestroy {
     }
 
     onEdit(headquarter: Headquarter) {
-        this.modalRef = this.modalService.show(HeadquarterModalComponent);
-        this.modalRef.content = headquarter;
+        const copy = Object.assign({}, headquarter);
+        const modal = this.modalService.show(HeadquarterModalComponent);
+        (<HeadquarterModalComponent>modal.content).openConfirmDialog(copy);
     }
 
     openConfirmDialog() {

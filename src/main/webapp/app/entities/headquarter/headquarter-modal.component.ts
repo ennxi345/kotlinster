@@ -5,6 +5,7 @@ import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { EntityService } from '../../../entity.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap';
+import { entityRoute } from 'app/entities/entity.route';
 
 @Component({
     selector: 'jhi-dialog-headquarter',
@@ -45,12 +46,19 @@ export class HeadquarterModalComponent implements OnInit, OnDestroy {
         }
     }
 
+    public openConfirmDialog(entity: Headquarter): void {
+        if (entity) {
+            this.headquarter = entity;
+            console.log(this.headquarter);
+        }
+    }
+
     cancel() {
         this.modalRef.hide();
     }
 
     onSaveSuccess(response: any) {
-        console.log(response);
+        this.modalRef.hide();
         this.eventManager.broadcast({
             name: 'HeadquarterList-modification',
             content: 'OK'
